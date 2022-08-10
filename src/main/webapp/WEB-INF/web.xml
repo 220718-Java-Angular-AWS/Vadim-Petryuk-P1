@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://java.sun.com/xml/ns/javaee"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+        version="2.5">
+    <listener>
+        <listener-class>main.java.servlets.DependencyLoaderListener</listener-class>
+    </listener>
+
+    <servlet-mapping>
+        <servlet-name>UserServlet</servlet-name>
+        <url-pattern>/main.java.servlets.UsersServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>UserServlet</servlet-name>
+        <servlet-class>main.java.servlets.UsersServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>RequestServlet</servlet-name>
+        <url-pattern>/main.java.servlets.RequestServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>RequestServlet</servlet-name>
+        <servlet-class>main.java.servlets.RequestServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+</web-app>
