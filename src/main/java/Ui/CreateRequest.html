@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<h1>New Request Submission</h1>
+Category of Request: <input type="text" id="rqstcateg"><br>
+Employee Email: <input type="text" id="empemail"><br>
+Brief Explanation: <input type="text" id="essay"><br>
+Total Reimbursement Amount: <input onkeypress="return event.charCode >= 48 && event.charCode <= 57" type="number" id="reimsum"><br>
+User Account ID number: <input onkeypress="return event.charCode >= 48 && event.charCode <= 57" type="number" id="user_id"><br>
+<button type="button" onclick="createNewRequest()">Submit New Request</button>
+</body>
+<script>
+    async function createNewRequest() {
+
+        let Request = {
+            rqstcateg: document.getElementById("rqstcateg").value,
+            empemail: document.getElementById("empemail").value,
+            essay: document.getElementById("essay").value,
+            reimsum: document.getElementById("reimsum").value,
+            user_id: document.getElementById("user_id").value
+        }
+        let url = 'http://localhost:8080/Vadim-Petryuk-P1/Requests';
+
+        let response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify(Request)
+        });
+        if (response.status == 200) {
+            alert("Success!");
+        } else {
+            alert("Something went wrong...");
+        }
+    }
+</script>
+
+</html>
