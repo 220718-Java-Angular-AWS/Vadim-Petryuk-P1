@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Title</title>
+</head>
+<body>
+    <h1>Targetted Request Removal</h1>
+    <label>Enter Distinct Request ID#: </label>
+    <input type="number" id="requestId" required>
+    <button type="submit" onclick="deleteRequest()"> Delete a Distinct Request</button>
+</body>
+<script> 
+    async function deleteRequest(){
+    let requestId = document.getElementById('requestId').value;
+    let url = 'http://localhost:8080/Vadim-Petryuk-P1/Requests?requestId=' + requestId;
+        let response = await fetch(url, {
+            method: 'DELETE',
+            headers:{
+                'Content-Type': 'application/json; charset=utf-8'
+            }
+        });
+        if (response.status == 200){
+            alert("This distinct request was deleted...")
+        }
+    };
+</script>
+</html>

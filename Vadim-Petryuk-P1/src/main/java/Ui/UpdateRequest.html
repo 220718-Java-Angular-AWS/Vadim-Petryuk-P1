@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Title</title>
+</head>
+<body>
+    <h3>Update Your Selected Request(s)</h3>
+    <label>Request ID #: </label>
+    <input type="number" placeholder="Enter your request ID" id="requestId" required>
+    <button type="submit" id="viewRequest" onclick="viewRequest()">Find Target Request</button>
+    <button type="submit" id="updateRequest" onclick="updateRequest()">Submit Updated Information</button>
+</form>
+<br>
+<div id="IndividualRequest">
+</div>
+</body>
+<script>
+async function viewRequest(){
+        let requestId = document.getElementById("requestId").value;
+        let url = 'http://localhost:8080/Vadim-Petryuk-P1/Requests?requestId=' + requestId;
+        let response = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8'
+            }
+        });
+            let request = await response.json();
+            let htmlElement = document.getElementById("IndividualRequest");
+            if(request.requestId != null){
+                htmlElement.innerHTML += "<h4>Request ID#:" + request.requestId + "</h4>"
+                htmlElement.innerHTML += "<h4>Request Category: <input type='text' id = 'rqstcateg' value = '" + request.rqstcateg + "'></h4>"
+                htmlElement.innerHTML += "<h4>Employee Email: <input type='text' id = 'empemail' value = '" + request.empemail + "'></h4>"
+                htmlElement.innerHTML += "<h4>Explanatory Essay: <textarea type='text' rows='6' cols='100' id = 'essay' > " + request.essay + "</textarea></h4>"
+                htmlElement.innerHTML += "<h4>Requested Sum: <input type='number' id = 'reimsum' value = '" + request.reimsum + "'></h4>"
+                htmlElement.innerHTML += "<p>Status of Request: " + request.statusreq + "</p>";   
+                htmlElement.innerHTML += "<p id='userID'>User ID Reminder: " + request.userId + "</p><br>";   
+            }else {
+                alert("Request Could Not Be Found...")
+            }
+}
+
+async function updateRequest(){
+    let requestId = document.getElementById("requestId").value;
+    let request = {
+
+            rqstcateg: document.getElementById("rqstcateg").value,
+            empemail: document.getElementById("empemail").value,
+            essay: document.getElementById("essay").value,
+            reimsum: document.getElementById("reimsum").value,
+            userId: document.getElementById("userID").value
+        }
+        let url = 'http://localhost:8080/Vadim-Petryuk-P1/Requests?requestId=' + requestId;
+
+        let response = await fetch(url, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify(request)
+        });
+        if (response.status == 200) {
+            alert("Successfuly Updated Request!");
+        } else {
+            alert("Something went wrong with attempted update...");
+        }
+}
+</script>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Title</title>
+</head>
+<body>
+    <h3>Press Button Below to View All Employees</h3>
+    <button type="button" onclick="getAllEmployees()">Look at All Employee Accounts</button>
+    <div id="allEmployeesList"></div>
+</body>
+<script> 
+    async function getAllEmployees(){
+
+    let url = 'http://localhost:8080/Vadim-Petryuk-P1/Users';
+    let response = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8'
+            }
+        });
+            
+            let array = await response.json();
+            let htmlElement = document.getElementById('allEmployeesList');
+
+            for(let i = 0; i < array.length; i++){
+                let users = array[i];
+                htmlElement.innerHTML += "<p>Employee User ID#: " + users.userId + "</p>";
+                htmlElement.innerHTML += "<p>First Name: " + users.fname + "</p>";
+                htmlElement.innerHTML += "<p>Last Name: " + users.lname + "</p>";
+                htmlElement.innerHTML += "<p>Employee Email: " + users.empemail + "</p>";
+                htmlElement.innerHTML += "<p>Employee Position: " + users.emposition + "</p>";
+                htmlElement.innerHTML += "<p>Employee Password: " + users.emppass + "</p>";   
+                htmlElement.innerHTML += "<p>Total Months Employed: " + users.monthsemployed + "</p>";
+                htmlElement.innerHTML += "<p>Employee has Admin privileges?: " + users.admincheck + "</p><br>";  
+            }
+    };
+</script>
+</html>
