@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<h1>New Request Submission</h1>
+Category of Request: <input type="text" id="rqstcateg"><br>
+Employee Email: <input type="text" id="empemail"><br>
+Brief Explanation:<textarea type='text' rows='5' cols='60' id = 'essay' ></textarea><br>
+Total Reimbursement Amount: <input onkeypress="return event.charCode >= 48 && event.charCode <= 57" type="number" id="reimsum"><br>
+User Account ID number: <input onkeypress="return event.charCode >= 48 && event.charCode <= 57" type="number" id="userId"><br>
+<button type="button" onclick="createNewRequest()">Submit New Request</button>
+</body>
+<style>
+    body{
+        padding:50px;
+        text-align:center;
+        background-color: #424549;
+    }
+    h1{
+        color: #354580
+    }
+    label{
+        padding: 0 20px;
+        color: #d8020d;
+    }
+    button{
+    background: #2197ff;
+      background-image: -webkit-linear-gradient(top, #2197ff, #0e3954);
+      background-image: -moz-linear-gradient(top, #2197ff, #0e3954);
+      background-image: -ms-linear-gradient(top, #2197ff, #0e3954);
+      background-image: -o-linear-gradient(top, #2197ff, #0e3954);
+      background-image: linear-gradient(to bottom, #2197ff, #0e3954);
+      -webkit-border-radius: 0;
+      -moz-border-radius: 0;
+      border-radius: 10px;
+      text-shadow: 1px 1px 3px #3d6b22;
+      font-family: Arial;
+      color: #373b02;
+      font-size: 18px;
+      padding: 10px 20px 10px 20px;
+      text-decoration: none;
+    }
+    button:hover {
+      background: #d1b113;
+      text-decoration: none;
+    }
+    </style>
+<script>
+    async function createNewRequest() {
+
+        let Request = {
+            rqstcateg: document.getElementById("rqstcateg").value,
+            empemail: document.getElementById("empemail").value,
+            essay: document.getElementById("essay").value,
+            reimsum: document.getElementById("reimsum").value,
+            userId: document.getElementById("userId").value
+        }
+        let url = 'http://localhost:8080/Vadim-Petryuk-P1/Requests';
+
+        let response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json;charset=utf-8'
+            },
+            body: JSON.stringify(Request)
+        });
+        if (response.status == 200) {
+            alert("Success!");
+        } else {
+            alert("Something went wrong...");
+        }
+    }
+</script>
+
+</html>
